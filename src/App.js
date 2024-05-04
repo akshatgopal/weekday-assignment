@@ -8,17 +8,28 @@ import JobCards from "./components/JobCards";
 import MessageIcon from "@mui/icons-material/Message";
 import "./App.css";
 import { IconButton } from "@mui/material";
+import LoadingButton from "@mui/lab/LoadingButton";
 
+var count = 0;
 const App = () => {
+  const [isAtBottom, setIsAtBottom] = useState(false);
   const [content, setContent] = useState([]);
-  const fetchData = async () => {
+  const [filters, setFilters] = useState({
+    Roles: [],
+    "No of Employees": [],
+    Experience: "",
+    Remote: [],
+    "Min Base Pay Salary": "",
+    "Tech Stack": [],
+  });
+  const fetchData = async (count, append) => {
     try {
       const myHeaders = new Headers();
       myHeaders.append("Content-Type", "application/json");
 
       const body = JSON.stringify({
         limit: 10,
-        offset: 10,
+        offset: count * 10,
       });
       const requestOptions = {
         method: "POST",
@@ -31,18 +42,52 @@ const App = () => {
         requestOptions
       );
       const result = await response.text();
-      console.log("Raw Result:", JSON.parse(result));
-      setContent(JSON.parse(result).jdList);
+      if (append) {
+        let finalData = JSON.parse(result).jdList;
+        setContent((prevContent) => [...prevContent, ...finalData]);
+      } else {
+        setContent(JSON.parse(result).jdList);
+      }
     } catch (error) {
       console.error(error);
     }
   };
   useEffect(() => {
-    fetchData();
+    fetchData(count, false);
   }, []);
+  useEffect(() => {
+    function handleScroll() {
+      const scrollPosition =
+        window.scrollY ||
+        window.pageYOffset ||
+        document.documentElement.scrollTop;
+      const documentHeight = Math.max(
+        document.body.scrollHeight,
+        document.body.offsetHeight,
+        document.documentElement.clientHeight,
+        document.documentElement.scrollHeight,
+        document.documentElement.offsetHeight
+      );
+      const windowHeight =
+        window.innerHeight ||
+        document.documentElement.clientHeight ||
+        document.body.clientHeight;
 
+      if (scrollPosition + windowHeight > documentHeight - 10) {
+        setIsAtBottom(true);
+        ++count;
+        fetchData(count, true);
+      } else {
+        setIsAtBottom(false);
+      }
+    }
+    window.addEventListener("scroll", handleScroll);
+    return () => {
+      window.removeEventListener("scroll", handleScroll);
+    };
+  }, []);
   return (
-    <Box sx={{ width: "auto", p: 1 }}>
+    <Box className="outerbox">
       <AppBar
         position="static"
         sx={{
@@ -64,8 +109,17 @@ const App = () => {
           </IconButton>
         </Toolbar>
       </AppBar>
-      <SearchInputs />
+      <SearchInputs filters={filters} setFilters={setFilters} />
       {content && <JobCards content={content} />}
+      {isAtBottom ? (
+        <IconButton>
+          <LoadingButton loading={isAtBottom} />
+        </IconButton>
+      ) : (
+        <IconButton>
+          <LoadingButton loading={false} />
+        </IconButton>
+      )}
     </Box>
   );
 };

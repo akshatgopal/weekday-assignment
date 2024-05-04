@@ -1,18 +1,9 @@
 import { Box } from "@mui/system";
-import React, { useState } from "react";
+import React from "react";
 import Inputs from "./Inputs";
 import { data } from "../constants/data";
 
-const SearchInputs = () => {
-  const [filters, setFilters] = useState({
-    Roles: [],
-    "No of Employees": [],
-    Experience: "",
-    Remote: [],
-    "Min Base Pay Salary": "",
-    "Tech Stack": [],
-  });
-
+const SearchInputs = ({ filters, setFilters }) => {
   const handleChange = (e) => {
     let value = e.target.value;
     let name = e.target.name;
@@ -32,7 +23,16 @@ const SearchInputs = () => {
     }
   };
   return (
-    <Box>
+    <Box
+      sx={{
+        display: "flex",
+        width: "70%",
+        p: "10px",
+        gap: 1,
+        mt: 2,
+        mb: 4,
+      }}
+    >
       {data.category.map((value, ind) => (
         <Inputs
           key={ind}

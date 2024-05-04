@@ -14,7 +14,7 @@ const Inputs = ({ onDelete, category, names, filterName, handleChange }) => {
   const isMultiple =
     category !== "Experience" && category !== "Min Base Pay Salary";
   return (
-    <FormControl sx={{ m: 1, width: 300 }}>
+    <FormControl sx={{ width: "25%" }}>
       <InputLabel
         id={`demo-multiple-chip-label-${category.split(" ").join("-")}`}
       >
