@@ -72,7 +72,6 @@ const App = () => {
       filters["Min Base Pay Salary"] === "" &&
       filters.Name === ""
     ) {
-      console.info("Inside called");
       setFilteredData([...content]);
       return;
     }

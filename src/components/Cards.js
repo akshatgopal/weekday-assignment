@@ -57,8 +57,8 @@ const Cards = ({ job }) => {
             </Typography>
           </Box>
           <Container sx={{ height: 400, overflow: "hidden" }}>
-            <Box sx={{ display: "flex", gap: 2, mb: 1 }}>
-              <img src={job.logoUrl} height={50} width={50} alt="" />
+            <Box sx={{ display: "flex", alignItems: "center", gap: 1, mb: 1 }}>
+              <img src={job.logoUrl} height={70} width={60} alt="" />
 
               <Box
                 sx={{
@@ -69,6 +69,16 @@ const Cards = ({ job }) => {
                 <Typography color="gray" variant="h6">
                   {job.companyName}
                 </Typography>
+                {job.jobRole && (
+                  <Typography
+                    sx={{
+                      textTransform: "capitalize",
+                      fontSize: 15,
+                    }}
+                  >
+                    {job.jobRole}
+                  </Typography>
+                )}
                 <Typography
                   sx={{
                     textTransform: "capitalize",
