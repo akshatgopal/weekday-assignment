@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import AppBar from "@mui/material/AppBar";
 import Box from "@mui/material/Box";
 import Toolbar from "@mui/material/Toolbar";
@@ -9,11 +9,20 @@ import MessageIcon from "@mui/icons-material/Message";
 import "./App.css";
 import { IconButton } from "@mui/material";
 import LoadingButton from "@mui/lab/LoadingButton";
+import { createTheme, ThemeProvider } from "@mui/material/styles";
+
+const theme = createTheme({
+  typography: {
+    fontFamily: "Lexend, sans-serif", // Set the desired font family
+  },
+});
 
 var count = 0;
 const App = () => {
   const [isAtBottom, setIsAtBottom] = useState(false);
+  const inputRef = useRef(null);
   const [content, setContent] = useState([]);
+  const [filteredData, setFilteredData] = useState([]);
   const [filters, setFilters] = useState({
     Roles: [],
     "No of Employees": [],
@@ -21,6 +30,7 @@ const App = () => {
     Remote: [],
     "Min Base Pay Salary": "",
     "Tech Stack": [],
+    Name: "",
   });
   const fetchData = async (count, append) => {
     try {
@@ -55,6 +65,39 @@ const App = () => {
   useEffect(() => {
     fetchData(count, false);
   }, []);
+
+  useEffect(() => {
+    console.log(filters);
+    if (
+      filters.Roles.length === 0 &&
+      filters.Remote.length === 0 &&
+      filters.Experience === "" &&
+      filters["Min Base Pay Salary"] === "" &&
+      filters.Name === ""
+    ) {
+      console.info("Inside called");
+      setFilteredData([...content]);
+      return;
+    }
+    const newData = content.filter((item) => {
+      return (
+        (filters.Roles.length === 0 ||
+          filters.Roles?.includes(item?.jobRole)) &&
+        (filters.Experience === "" ||
+          (parseInt(filters?.Experience) >= parseInt(item?.minExp) &&
+            parseInt(filters?.Experience) <= parseInt(item?.maxExp))) &&
+        (filters["Min Base Pay Salary"] === "" ||
+          parseInt(filters["Min Base Pay Salary"]) <=
+            parseInt(item?.minJdSalary)) &&
+        (filters.Remote.length === 0 ||
+          filters.Remote?.includes(item?.location) ||
+          (!filters.Remote.includes("remote") && item.location !== "remote")) &&
+        (filters.Name === "" ||
+          item?.companyName?.toLowerCase().includes(filters.Name.toLowerCase()))
+      );
+    });
+    setFilteredData([...newData]);
+  }, [filters, content]);
   useEffect(() => {
     function handleScroll() {
       const scrollPosition =
@@ -87,40 +130,44 @@ const App = () => {
     };
   }, []);
   return (
-    <Box className="outerbox">
-      <AppBar
-        position="static"
-        sx={{
-          backgroundColor: "rgba(255, 255, 255, 0.5)",
-          color: "black",
-          borderRadius: 4,
-        }}
-      >
-        <Toolbar>
-          <Typography
-            variant="h6"
-            component="div"
-            sx={{ flexGrow: 1, fontFamily: "Lexend" }}
-          >
-            👋 Hello
-          </Typography>
-          <IconButton>
-            <MessageIcon style={{ color: "rgb(85, 239, 196)" }} />
-          </IconButton>
-        </Toolbar>
-      </AppBar>
-      <SearchInputs filters={filters} setFilters={setFilters} />
-      {content && <JobCards content={content} />}
-      {isAtBottom ? (
-        <IconButton>
+    <ThemeProvider theme={theme}>
+      <Box className="outerbox">
+        <AppBar
+          position="static"
+          sx={{
+            backgroundColor: "rgba(255, 255, 255, 0.5)",
+            color: "black",
+            borderRadius: 4,
+            width: "95%",
+            mt: 1,
+          }}
+        >
+          <Toolbar>
+            <Typography
+              variant="h6"
+              component="div"
+              sx={{ flexGrow: 1, fontFamily: "Lexend" }}
+            >
+              👋 Hello
+            </Typography>
+            <IconButton>
+              <MessageIcon style={{ color: "rgb(85, 239, 196)" }} />
+            </IconButton>
+          </Toolbar>
+        </AppBar>
+        <SearchInputs
+          inputRef={inputRef}
+          filters={filters}
+          setFilters={setFilters}
+        />
+        {filteredData && <JobCards content={filteredData} />}
+        {isAtBottom ? (
           <LoadingButton loading={isAtBottom} />
-        </IconButton>
-      ) : (
-        <IconButton>
+        ) : (
           <LoadingButton loading={false} />
-        </IconButton>
-      )}
-    </Box>
+        )}
+      </Box>
+    </ThemeProvider>
   );
 };
 

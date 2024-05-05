@@ -7,6 +7,9 @@ import Button from "@mui/material/Button";
 import Grid from "@mui/material/Grid";
 
 const Cards = ({ job }) => {
+  const handleButtonClick = () => {
+    window.open(job.jdLink, "_blank");
+  };
   return (
     <Grid
       item
@@ -25,10 +28,8 @@ const Cards = ({ job }) => {
     >
       <Card
         sx={{
-          display: "flex",
-          flexDirection: "column",
-          justifyContent: "space-between",
           width: "75%",
+          boxShadow: "0px 0px 8px 0px rgba(0, 0, 0, 0.1)",
           borderRadius: 8,
           p: 1,
         }}
@@ -40,43 +41,52 @@ const Cards = ({ job }) => {
           }}
         >
           {/* Job Details  */}
+          <Box
+            sx={{
+              borderRadius: 5,
+              mb: 3,
+              boxShadow: "0px 0px 8px 0px rgba(0, 0, 0, 0.1)",
+              marginLeft: 3,
+              p: "5px 0px 5px 5px",
+            }}
+            className="posts"
+          >
+            <Typography sx={{ fontSize: "10px", fontWeight: "light" }}>
+              ⏳ Posted 5 days ago
+            </Typography>
+          </Box>
           <Container sx={{ height: 400, overflow: "hidden" }}>
             <Box sx={{ display: "flex", gap: 2, mb: 1 }}>
-              {/* first have an image */}
               <img src={job.logoUrl} height={50} width={50} alt="" />
-              {/* then another div 
-          which will contain name of company, job type, location and experience  */}
+
               <Box
                 sx={{
                   display: "flex",
                   flexDirection: "column",
                 }}
               >
-                <Typography sx={{ fontFamily: "Lexend" }} variant="h6">
+                <Typography color="gray" variant="h6">
                   {job.companyName}
                 </Typography>
                 <Typography
                   sx={{
                     textTransform: "capitalize",
                     fontSize: 13,
-                    fontFamily: "Lexend",
                   }}
                 >
-                  {job.location} | {job.minExp} - {job.maxExp} years
+                  {job.location} {job.minExp && `| ${job.minExp}`}{" "}
+                  {job.maxExp && `- ${job.maxExp} Years`}
                 </Typography>
               </Box>
             </Box>
-            <Typography
-              sx={{ fontFamily: "Lexend", fontSize: 16 }}
-              variant="subtitle1"
-            >
-              Estimated Salary : {job.minJdSalary} - {job.maxJdSalary} LPA
+            <Typography sx={{ fontSize: 16 }} variant="subtitle1" color="gray">
+              Estimated Salary : {job.minJdSalary && job.minJdSalary}{" "}
+              {job.minJdSalary && job.maxJdSalary ? "-" : ""} {job.maxJdSalary}{" "}
+              LPA
             </Typography>
             <Box sx={{ mt: 1 }}>
-              <Typography sx={{ fontFamily: "Lexend", fontSize: 16 }}>
-                About Company :
-              </Typography>
-              <Typography sx={{ fontFamily: "Lexend", fontSize: 14 }}>
+              <Typography sx={{ fontSize: 16 }}>About Company :</Typography>
+              <Typography sx={{ fontSize: 14 }}>
                 {job.jobDetailsFromCompany}
               </Typography>
             </Box>
@@ -86,7 +96,7 @@ const Cards = ({ job }) => {
           <Container
             sx={{
               position: "absolute",
-              bottom: "33%",
+              bottom: "32%",
               left: 1,
               display: "flex",
               backgroundColor: "rgba(255, 255, 255, 0.9)",
@@ -99,10 +109,11 @@ const Cards = ({ job }) => {
                 width: "100%",
                 p: 2,
                 borderRadius: 2,
-                fontFamily: "Lexend",
+
                 fontSize: 15,
               }}
               variant="text"
+              onClick={handleButtonClick}
             >
               View Job
             </Button>
@@ -143,7 +154,6 @@ const Cards = ({ job }) => {
                 width: "100%",
                 p: 2,
                 borderRadius: 2,
-                fontFamily: "Lexend",
                 fontSize: 15,
               }}
             >
@@ -156,7 +166,7 @@ const Cards = ({ job }) => {
                 width: "100%",
                 p: 2,
                 borderRadius: 2,
-                fontFamily: "Lexend",
+
                 fontSize: 15,
               }}
             >

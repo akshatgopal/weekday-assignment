@@ -14,15 +14,15 @@ const Inputs = ({ onDelete, category, names, filterName, handleChange }) => {
   const isMultiple =
     category !== "Experience" && category !== "Min Base Pay Salary";
   return (
-    <FormControl sx={{ width: "25%" }}>
-      <InputLabel
-        id={`demo-multiple-chip-label-${category.split(" ").join("-")}`}
-      >
-        {category}
-      </InputLabel>
+    <FormControl
+      className={
+        category !== "Min Base Pay Salary" || category !== "No of Employees"
+          ? "inputBox"
+          : "biggerBox"
+      }
+    >
+      <InputLabel>{category}</InputLabel>
       <Select
-        labelId="demo-multiple-chip-label"
-        id="demo-multiple-chip"
         multiple={isMultiple}
         value={filterName}
         input={<OutlinedInput id="select-multiple-chip" name={category} />}
@@ -32,9 +32,9 @@ const Inputs = ({ onDelete, category, names, filterName, handleChange }) => {
             {isMultiple ? (
               selected.map((value) => (
                 <Chip
-                  onDelete={() => onDelete(category, value)}
                   key={value}
                   label={value}
+                  onDelete={() => onDelete(category, value)}
                   deleteIcon={
                     <CancelIcon
                       onMouseDown={(event) => event.stopPropagation()}
@@ -44,9 +44,9 @@ const Inputs = ({ onDelete, category, names, filterName, handleChange }) => {
               ))
             ) : (
               <Chip
-                onDelete={() => onDelete(category, selected)}
                 key={selected}
                 label={selected}
+                onDelete={() => onDelete(category, selected)}
                 deleteIcon={
                   <CancelIcon
                     onMouseDown={(event) => event.stopPropagation()}
@@ -61,7 +61,10 @@ const Inputs = ({ onDelete, category, names, filterName, handleChange }) => {
           <MenuItem
             key={name}
             value={name}
-            sx={{ justifyContent: "space-between" }}
+            sx={{
+              justifyContent: "space-between",
+              textTransform: "capitalize",
+            }}
           >
             {name}
           </MenuItem>

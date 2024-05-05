@@ -8,12 +8,12 @@ const category = [
 ];
 
 const categoryData = {
-  Roles: ["Backend", "Frontend", "Fullstack", "IOS", "Flutter", "Data Science"],
+  Roles: ["backend", "frontend", "fullstack", "ios", "flutter", "data science"],
   "No of Employees": ["1-10", "11-20", "21-25", "51-100", "101-200"],
   Experience: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10],
-  "Tech Stack": ["Java", "Python", "Javascript", "Kotlin", "Django"],
-  Remote: ["Remote", "Hybrid", "In-office"],
-  "Min Base Pay Salary": ["0L", "10L", "20L", "30L", "40L", "50L", "60L"],
+  "Tech Stack": ["java", "python", "javascript", "kotlin", "django"],
+  Remote: ["remote", "hybrid", "in-office"],
+  "Min Base Pay Salary": ["0", "10", "20", "30", "40", "50", "60"],
 };
 
 export const data = {

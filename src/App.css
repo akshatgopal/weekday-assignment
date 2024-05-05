@@ -12,3 +12,44 @@
   flex-direction: column;
   align-items: center;
 }
+
+.searchBox {
+  display: flex;
+  width: 95%;
+  padding: 10px;
+  margin: 20px 0;
+  gap: 12px;
+}
+
+.inputBox {
+  width: 25%;
+}
+
+.biggerBox {
+  width: 40%;
+}
+
+.posts {
+  width: 40%;
+}
+
+@media (max-width: 1200px) {
+  .searchBox {
+    flex-wrap: wrap;
+  }
+
+  .biggerBox,
+  .posts {
+    width: 80%;
+  }
+}
+
+@media (max-width: 864px) {
+  .inputBox,
+  .biggerBox {
+    width: 100%;
+  }
+  .posts {
+    width: 40%;
+  }
+}

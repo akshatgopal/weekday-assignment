@@ -2,14 +2,23 @@ import { Box } from "@mui/system";
 import React from "react";
 import Inputs from "./Inputs";
 import { data } from "../constants/data";
+import { TextField } from "@mui/material";
 
-const SearchInputs = ({ filters, setFilters }) => {
+const SearchInputs = ({ inputRef, filters, setFilters }) => {
   const handleChange = (e) => {
     let value = e.target.value;
     let name = e.target.name;
     setFilters({
       ...filters,
       [name]: typeof value === "string" ? value.split(",") : value,
+    });
+  };
+
+  const handleInputChange = (e) => {
+    const inputValue = e.target.value;
+    setFilters({
+      ...filters,
+      ["Name"]: inputValue,
     });
   };
 
@@ -23,16 +32,7 @@ const SearchInputs = ({ filters, setFilters }) => {
     }
   };
   return (
-    <Box
-      sx={{
-        display: "flex",
-        width: "70%",
-        p: "10px",
-        gap: 1,
-        mt: 2,
-        mb: 4,
-      }}
-    >
+    <Box className="searchBox">
       {data.category.map((value, ind) => (
         <Inputs
           key={ind}
@@ -43,6 +43,13 @@ const SearchInputs = ({ filters, setFilters }) => {
           onDelete={onDelete}
         />
       ))}
+      <TextField
+        className="biggerBox"
+        inputRef={inputRef}
+        onChange={handleInputChange}
+        label="Search Company Name"
+        variant="outlined"
+      />
     </Box>
   );
 };
