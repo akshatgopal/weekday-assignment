@@ -18,8 +18,10 @@ const theme = createTheme({
 });
 
 var count = 0;
+var totalCount = 0;
 const App = () => {
   const [isAtBottom, setIsAtBottom] = useState(false);
+  const [reachedEnd, setReachedEnd] = useState(false);
   const inputRef = useRef(null);
   const [content, setContent] = useState([]);
   const [filteredData, setFilteredData] = useState([]);
@@ -36,6 +38,11 @@ const App = () => {
   myHeaders.append("Content-Type", "application/json");
   const fetchData = async (count, append) => {
     try {
+      if (count * 10 > totalCount) {
+        setReachedEnd(true);
+        console.log("you've reached at the end");
+        return;
+      }
       const body = JSON.stringify({
         limit: 10,
         offset: count * 10,
@@ -51,11 +58,15 @@ const App = () => {
         requestOptions
       );
       const result = await response.text();
+      let jsonData = JSON.parse(result);
+      if (!totalCount) {
+        totalCount = jsonData.totalCount;
+      }
       if (append) {
-        let finalData = JSON.parse(result).jdList;
+        let finalData = jsonData.jdList;
         setContent((prevContent) => [...prevContent, ...finalData]);
       } else {
-        setContent(JSON.parse(result).jdList);
+        setContent(jsonData.jdList);
       }
     } catch (error) {
       console.error(error);
@@ -156,10 +167,9 @@ const App = () => {
           setFilters={setFilters}
         />
         {filteredData && <JobCards content={filteredData} />}
-        {isAtBottom ? (
-          <LoadingButton loading={isAtBottom} />
-        ) : (
-          <LoadingButton loading={false} />
+        {isAtBottom && !reachedEnd && <LoadingButton loading={isAtBottom} />}
+        {reachedEnd && (
+          <Typography>Congratulations you've reached at the end! 🚀</Typography>
         )}
       </Box>
     </ThemeProvider>

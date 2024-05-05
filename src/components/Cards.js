@@ -93,7 +93,7 @@ const Cards = ({ job }) => {
             <Typography sx={{ fontSize: 16 }} variant="subtitle1" color="gray">
               Estimated Salary : {job.minJdSalary && job.minJdSalary}{" "}
               {job.minJdSalary && job.maxJdSalary ? "-" : ""} {job.maxJdSalary}{" "}
-              LPA
+              LPA ✅
             </Typography>
             <Box sx={{ mt: 1 }}>
               <Typography sx={{ fontSize: 16, fontWeight: "bold" }}>
@@ -162,7 +162,7 @@ const Cards = ({ job }) => {
             <Button
               size="small"
               sx={{
-                background: "rgb(85, 239, 196)",
+                background: "rgba(84,239,195,255)",
                 color: "black",
                 width: "100%",
                 p: 2,
@@ -180,7 +180,7 @@ const Cards = ({ job }) => {
                 width: "100%",
                 p: 2,
                 borderRadius: 2,
-
+                background: "rgba(72,67,219,255)",
                 fontSize: 15,
               }}
             >
