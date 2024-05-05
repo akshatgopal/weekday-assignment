@@ -17,27 +17,28 @@ const Cards = ({ job }) => {
         display: "flex",
         justifyContent: "center",
         alignItems: "center",
-        mb: 4,
+        mb: 6,
       }}
       key={job.jdUid}
       xs={12}
-      sm={6}
-      md={4}
+      sm={12}
+      md={6}
       lg={4}
       xl={4}
     >
       <Card
         sx={{
-          width: "75%",
+          width: "70%",
           boxShadow: "0px 0px 8px 0px rgba(0, 0, 0, 0.1)",
           borderRadius: 8,
-          p: 1,
+          p: 3,
         }}
       >
         <CardContent
           sx={{
             position: "relative",
             backgroundColor: "rgba(255, 255, 255, 0.5)",
+            p: 0,
           }}
         >
           {/* Job Details  */}
@@ -51,7 +52,7 @@ const Cards = ({ job }) => {
             }}
             className="posts"
           >
-            <Typography sx={{ fontSize: "10px", fontWeight: "light" }}>
+            <Typography sx={{ fontSize: "12px", fontWeight: "light" }}>
               ⏳ Posted 5 days ago
             </Typography>
           </Box>
@@ -71,7 +72,7 @@ const Cards = ({ job }) => {
                 <Typography
                   sx={{
                     textTransform: "capitalize",
-                    fontSize: 13,
+                    fontSize: 15,
                   }}
                 >
                   {job.location} {job.minExp && `| ${job.minExp}`}{" "}
@@ -85,8 +86,10 @@ const Cards = ({ job }) => {
               LPA
             </Typography>
             <Box sx={{ mt: 1 }}>
-              <Typography sx={{ fontSize: 16 }}>About Company :</Typography>
-              <Typography sx={{ fontSize: 14 }}>
+              <Typography sx={{ fontSize: 16, fontWeight: "bold" }}>
+                About Company :
+              </Typography>
+              <Typography sx={{ fontSize: 15 }}>
                 {job.jobDetailsFromCompany}
               </Typography>
             </Box>

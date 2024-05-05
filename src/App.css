@@ -38,8 +38,7 @@
     flex-wrap: wrap;
   }
 
-  .biggerBox,
-  .posts {
+  .biggerBox {
     width: 80%;
   }
 }
