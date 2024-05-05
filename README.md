@@ -2,7 +2,7 @@
 
 Job board web application built with React.
 
-Each job listing is displayed as a card containing the following information:
+Each job is displayed as a card containing the following information:
 
 - Job title
 - Company name
@@ -25,7 +25,7 @@ Users can refine job listings based on the following filters:
 
 ### Infinite Scroll
 
-The platform implements infinite scroll to load additional job listings automatically as the user scrolls down the page.
+The platform implements infinite scroll to load additional job listings automatically as the user scrolls down the page, along with lazy load,ie, once the user reaches at the bottom of the page, only then additional data is loaded from the API call.
 
 ### Responsive Design
 
