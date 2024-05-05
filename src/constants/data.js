@@ -8,7 +8,22 @@ const category = [
 ];
 
 const categoryData = {
-  Roles: ["backend", "frontend", "fullstack", "ios", "flutter", "data science"],
+  Roles: [
+    "backend",
+    "frontend",
+    "fullstack",
+    "ios",
+    "flutter",
+    "react native",
+    "android",
+    "dev-ops",
+    "data engineer",
+    "data science",
+    "tech lead",
+    "nlp",
+    "web3",
+    "sre",
+  ],
   "No of Employees": ["1-10", "11-20", "21-25", "51-100", "101-200"],
   Experience: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10],
   "Tech Stack": ["java", "python", "javascript", "kotlin", "django"],

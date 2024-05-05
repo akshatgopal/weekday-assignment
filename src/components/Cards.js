@@ -156,6 +156,7 @@ const Cards = ({ job }) => {
                 borderRadius: 2,
                 fontSize: 15,
               }}
+              onClick={handleButtonClick}
             >
               ⚡ Easy Apply
             </Button>

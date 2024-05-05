@@ -13,7 +13,7 @@ import { createTheme, ThemeProvider } from "@mui/material/styles";
 
 const theme = createTheme({
   typography: {
-    fontFamily: "Lexend, sans-serif", // Set the desired font family
+    fontFamily: "Lexend, sans-serif",
   },
 });
 
@@ -32,11 +32,10 @@ const App = () => {
     "Tech Stack": [],
     Name: "",
   });
+  const myHeaders = new Headers();
+  myHeaders.append("Content-Type", "application/json");
   const fetchData = async (count, append) => {
     try {
-      const myHeaders = new Headers();
-      myHeaders.append("Content-Type", "application/json");
-
       const body = JSON.stringify({
         limit: 10,
         offset: count * 10,
@@ -65,9 +64,7 @@ const App = () => {
   useEffect(() => {
     fetchData(count, false);
   }, []);
-
   useEffect(() => {
-    console.log(filters);
     if (
       filters.Roles.length === 0 &&
       filters.Remote.length === 0 &&
@@ -139,7 +136,6 @@ const App = () => {
             color: "black",
             borderRadius: 4,
             width: "95%",
-            mt: 1,
           }}
         >
           <Toolbar>
